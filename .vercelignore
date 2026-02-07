@@ -2,3 +2,4 @@ node_modules
 .git
 .DS_Store
 *.log
+# Force redeploy - Sun Feb  8 00:29:50 IST 2026
