@@ -4,20 +4,6 @@
   "outputDirectory": ".",
   "cleanUrls": true,
   "trailingSlash": true,
-  "routes": [
-    {
-      "src": "/_next/(.*)",
-      "dest": "/_next/$1"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
   "headers": [
     {
       "source": "/_next/static/(.*)",
