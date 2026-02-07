@@ -1,0 +1,16 @@
+{
+  "name": "simpedu-website",
+  "version": "1.0.0",
+  "description": "Simpedu - School Management System and ID Card Printing Services",
+  "scripts": {
+    "build": "echo 'Static site - no build needed'",
+    "start": "python3 -m http.server 3000"
+  },
+  "keywords": [
+    "education",
+    "school-management",
+    "id-cards"
+  ],
+  "author": "Simpedu",
+  "license": "ISC"
+}
