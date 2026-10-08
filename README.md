@@ -15,6 +15,15 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
 
+## Screenshots
+
+<p align="center">
+  <img src="./screenshot-ui.png" alt="simpedu UI" width="100%" />
+  <br />
+  <em>School management site — hero and services.</em>
+</p>
+
+
 ## What it is
 
 The marketing + services website for SimpEdu: school management software and ID-card printing services. A multi-page static site (home, about, services, ID cards, contact, 404) with responsive design, served as plain HTML/CSS/JS and deployed on Vercel. No build step, no backend — fast and simple.
