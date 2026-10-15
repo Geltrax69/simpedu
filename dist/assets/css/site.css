@@ -462,3 +462,42 @@
 }
 #card-viewer::backdrop { background: rgba(20, 24, 31, 0.55); }
 #card-viewer [data-dialog-frame] { max-height: 70vh; margin-inline: auto; }
+
+/* Mobile navigation */
+.menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+}
+.menu-btn span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--fg);
+  transition: transform 200ms var(--ease-out), opacity 200ms;
+}
+@media (max-width: 899px) {
+  .menu-btn { display: flex; }
+  .site-header nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-4) var(--space-5) var(--space-5);
+    gap: var(--space-3);
+  }
+  .site-header nav.open { display: flex; }
+  .site-header nav a { padding: var(--space-2) 0; font-size: 17px; }
+  .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}

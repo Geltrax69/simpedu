@@ -158,3 +158,27 @@ document.addEventListener("click", function (e) {
       });
   });
 })();
+
+/* Accessible mobile menu: toggle, Escape to close, focus management. */
+(function () {
+  var btn = document.querySelector(".menu-btn");
+  var nav = document.getElementById("primary-nav");
+  if (!btn || !nav) return;
+  function setOpen(open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    nav.classList.toggle("open", open);
+  }
+  btn.addEventListener("click", function () {
+    setOpen(btn.getAttribute("aria-expanded") !== "true");
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && nav.classList.contains("open")) {
+      setOpen(false);
+      btn.focus();
+    }
+  });
+  nav.addEventListener("click", function (e) {
+    if (e.target.closest("a")) setOpen(false);
+  });
+})();
