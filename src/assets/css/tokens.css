@@ -1,0 +1,72 @@
+/* Simpedu design tokens. Warm ivory, deep ink, single cobalt accent. */
+:root {
+  --ivory: #f6f5f0;
+  --ink: #14181f;
+  --cobalt: #2457e7;
+  --cobalt-deep: #1a43b8;
+  --muted: #555d69;
+  --line: #e2ded2;
+  --card: #ffffff;
+
+  --bg: var(--ivory);
+  --fg: var(--ink);
+  --fg-muted: var(--muted);
+
+  --font-body: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --space-9: 96px;
+
+  --radius-s: 6px; --radius-m: 12px; --radius-l: 20px;
+
+  --content-max: 1360px;
+  --gutter-desktop: 64px;
+  --gutter-mobile: 22px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="dark"] {
+  --bg: #10141b;
+  --fg: #f2f3f5;
+  --fg-muted: #a7b0bc;
+  --line: #262d38;
+  --card: #171d26;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter-mobile);
+}
+@media (min-width: 900px) {
+  .wrap { padding-inline: var(--gutter-desktop); }
+}
+
+:focus-visible {
+  outline: 3px solid var(--cobalt);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

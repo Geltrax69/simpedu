@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Simpedu - School Management System and ID Card Printing Services",
   "scripts": {
-    "build": "echo 'Static site - no build needed'",
-    "start": "python3 -m http.server 3000"
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "dev": "eleventy --serve"
   },
   "keywords": [
     "education",
@@ -12,5 +13,9 @@
     "id-cards"
   ],
   "author": "Simpedu",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "playwright": "^1.64.1"
+  }
 }
