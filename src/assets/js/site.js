@@ -40,15 +40,121 @@
   });
 })();
 
-/* ID-card front/back toggle. Explicit buttons, not hover. */
+/* ID-card front/back toggle. Explicit buttons, not hover. Each
+   [data-flip-group] owns its buttons and image; buttons outside any group
+   fall back to document scope, which keeps the homepage pair working. */
+document.addEventListener("click", function (e) {
+  var btn = e.target.closest("[data-flip]");
+  if (!btn) return;
+  var scope = btn.closest("[data-flip-group]") || document;
+  var side = btn.getAttribute("data-flip");
+  scope.querySelectorAll("[data-flip]").forEach(function (b) {
+    b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+  });
+  var img = scope.querySelector("[data-flip-img]");
+  if (img && (side === "front" || side === "back")) {
+    var src = img.getAttribute("data-" + side + "-src");
+    var alt = img.getAttribute("data-" + side + "-alt");
+    if (src) img.setAttribute("src", src);
+    if (alt) img.setAttribute("alt", alt);
+  }
+});
+
+/* Enlarge: copy the card's front/back into the shared dialog, match its
+   orientation and current side, then show it. */
 (function () {
-  var buttons = Array.from(document.querySelectorAll("[data-flip]"));
-  if (!buttons.length) return;
-  buttons.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      buttons.forEach(function (b) {
-        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
-      });
+  var dialog = document.getElementById("card-viewer");
+  if (!dialog) return;
+  var dialogImg = dialog.querySelector("[data-flip-img]");
+  var dialogFrame = dialog.querySelector("[data-dialog-frame]");
+  if (!dialogImg || !dialogFrame) return;
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-enlarge]");
+    if (!btn) return;
+    var group = btn.closest("[data-flip-group]");
+    var cardImg = group && group.querySelector("[data-flip-img]");
+    if (!cardImg) return;
+    var current = group.querySelector('[data-flip][aria-pressed="true"]');
+    var side = current ? current.getAttribute("data-flip") : "front";
+    ["front", "back"].forEach(function (s) {
+      dialogImg.setAttribute("data-" + s + "-src", cardImg.getAttribute("data-" + s + "-src"));
+      dialogImg.setAttribute("data-" + s + "-alt", cardImg.getAttribute("data-" + s + "-alt"));
     });
+    dialogImg.setAttribute("width", cardImg.getAttribute("width"));
+    dialogImg.setAttribute("height", cardImg.getAttribute("height"));
+    dialogFrame.classList.remove("id-card-frame--portrait", "id-card-frame--landscape");
+    dialogFrame.classList.add("id-card-frame--" + group.getAttribute("data-orientation"));
+    var dialogBtn = dialog.querySelector('[data-flip="' + side + '"]');
+    if (dialogBtn) dialogBtn.click();
+    if (typeof dialog.showModal === "function") dialog.showModal();
+  });
+})();
+
+/* Contact form: Web3Forms JSON submission as a small state machine.
+   States: idle -> pending -> success | failure. Inputs are preserved on
+   failure and cleared only on success. */
+(function () {
+  var form = document.getElementById("contact-form");
+  if (!form) return;
+  var status = form.querySelector("[data-form-status]");
+  var submit = form.querySelector("[data-submit]");
+  var submitLabel = submit.querySelector("[data-submit-label]");
+  var idleLabel = submitLabel.textContent;
+  var state = "idle";
+
+  function setState(next, message, tone) {
+    state = next;
+    status.textContent = "";
+    if (message) status.appendChild(message);
+    status.setAttribute("data-state", tone || "");
+    submit.disabled = next === "pending";
+    submitLabel.textContent = next === "pending" ? "Sending\u2026" : idleLabel;
+    form.setAttribute("aria-busy", next === "pending" ? "true" : "false");
+  }
+
+  function failureMessage() {
+    var p = document.createElement("span");
+    p.appendChild(document.createTextNode("Something went wrong sending your message. Please try again, or write to us directly at "));
+    var a = document.createElement("a");
+    a.href = "mailto:humanresource@simpedu.in";
+    a.textContent = "humanresource@simpedu.in";
+    p.appendChild(a);
+    p.appendChild(document.createTextNode("."));
+    return p;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (state === "pending") return;
+    var payload = {
+      access_key: "1fe9a410-42c5-4523-af7c-024a2a4ce144",
+      from_name: "Simpedu Contact Form",
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      phone: form.phone.value.trim(),
+      company: form.company.value.trim(),
+      subject: form.subject.value,
+      message: form.message.value.trim()
+    };
+    setState("pending");
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) { return res.json().then(function (json) { return json && json.success; }); })
+      .then(function (ok) {
+        if (ok) {
+          var done = document.createElement("span");
+          done.textContent = "Thanks — your message is on its way. We reply within one working day.";
+          setState("success", done, "success");
+          form.reset();
+        } else {
+          setState("failure", failureMessage(), "error");
+        }
+      })
+      .catch(function () {
+        setState("failure", failureMessage(), "error");
+      });
   });
 })();

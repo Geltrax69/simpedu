@@ -1,0 +1,77 @@
+---
+layout: layouts/base.njk
+title: "Contact Simpedu — Book a demo or discuss ID-card printing"
+description: "Talk to Simpedu about school management software or custom ID-card printing. Send a message, call, or write — we reply during working hours, Monday to Friday, 9 AM to 6 PM IST."
+---
+
+<section class="contact">
+  <div class="wrap">
+    <p class="kicker">Contact</p>
+    <h1>Talk to us.</h1>
+    <p class="lede">Tell us about your institution and what you need — a software demo, an ID-card printing quote, or help with an existing setup. We reply within one working day.</p>
+
+    <div class="contact-grid">
+      <form class="contact-form" id="contact-form" method="post" action="https://api.web3forms.com/submit">
+        <div class="form-row">
+          <div class="field">
+            <label for="cf-name">Full name</label>
+            <input type="text" id="cf-name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="cf-phone">Phone <span class="optional">(optional)</span></label>
+            <input type="tel" id="cf-phone" name="phone" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="cf-company">Institution <span class="optional">(optional)</span></label>
+            <input type="text" id="cf-company" name="company" autocomplete="organization">
+          </div>
+        </div>
+        <div class="field">
+          <label for="cf-subject">Subject</label>
+          <select id="cf-subject" name="subject" required>
+            <option value="Book a demo">Book a demo</option>
+            <option value="ID-card printing enquiry">ID-card printing enquiry</option>
+            <option value="Support for an existing setup">Support for an existing setup</option>
+            <option value="Partnership">Partnership</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="6" required></textarea>
+        </div>
+        <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+        <div>
+          <button type="submit" class="btn btn-primary" data-submit>
+            <span data-submit-label>Send message</span>
+          </button>
+        </div>
+      </form>
+
+      <aside class="contact-aside" aria-label="Other ways to reach us">
+        <div class="contact-item">
+          <h2>Email</h2>
+          <a href="mailto:humanresource@simpedu.in">humanresource@simpedu.in</a>
+        </div>
+        <div class="contact-item">
+          <h2>Phone</h2>
+          <a href="tel:+919053304303">+91 90533 04303</a>
+        </div>
+        <div class="contact-item">
+          <h2>Address</h2>
+          <p>Near D.R.M. Sr. Sec. School,<br>V.P.O: Rurkee, Rohtak,<br>Haryana</p>
+        </div>
+        <div class="contact-item">
+          <h2>Hours</h2>
+          <p>Monday–Friday, 9 AM–6 PM IST</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

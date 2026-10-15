@@ -3,7 +3,7 @@
  */
 import { chromium } from 'playwright';
 
-const baseUrl = process.argv[1] || 'http://localhost:3000';
+const baseUrl = process.argv[2] || 'http://localhost:3000';
 const routes = ['/', '/about/', '/services/', '/id-cards/', '/contact/'];
 const seen = new Set();
 const bad = [];
