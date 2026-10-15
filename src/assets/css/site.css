@@ -143,6 +143,10 @@
   display: block;
   margin-bottom: var(--space-4);
 }
+.work-story img.portrait-card {
+  max-width: 280px;
+  margin-inline: auto;
+}
 .work-story h3 { margin: 0 0 var(--space-2); font-size: 22px; }
 .work-story p { color: var(--fg-muted); margin: 0; max-width: 36em; }
 
@@ -169,8 +173,31 @@
   flex-shrink: 0;
 }
 .tabs [role="tab"][aria-selected="true"] {
-  color: var(--cobalt);
-  border-bottom-color: var(--cobalt);
+  color: var(--accent-text);
+  border-bottom-color: var(--accent-text);
+}
+.tab-panels {
+  display: grid;
+}
+.tab-panels [role="tabpanel"] {
+  grid-area: 1 / 1;
+}
+.tab-panels [role="tabpanel"][hidden] {
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+}
+.tab-panels [role="tabpanel"]:not([hidden]) {
+  animation: panel-in 0.3s ease-out;
+}
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tab-panels [role="tabpanel"]:not([hidden]) {
+    animation: none;
+  }
 }
 .tab-panels [role="tabpanel"] h3 { margin: 0 0 var(--space-2); font-size: 24px; }
 .tab-panels [role="tabpanel"] p { color: var(--fg-muted); max-width: 40em; margin: 0; }
@@ -195,16 +222,18 @@
   cursor: pointer;
 }
 .flip-controls button[aria-pressed="true"] {
-  border-color: var(--cobalt);
-  color: var(--cobalt);
+  border-color: var(--accent-text);
+  color: var(--accent-text);
 }
 .sample-note { font-size: 14px; }
-.card-figure { margin: 0; }
+.card-figure { margin: 0; display: flex; justify-content: center; }
 .card-figure img {
   width: 100%;
+  max-width: 300px;
   height: auto;
   border-radius: var(--radius-m);
   display: block;
+  object-fit: contain;
 }
 
 .process { background: var(--ink); color: #f2f3f5; }
@@ -599,5 +628,9 @@
 .ledger li:last-child { border-bottom: none; }
 .ledger .paid { color: #065F46; font-weight: 600; }
 .ledger .pending { color: #92400E; font-weight: 600; }
+[data-theme="dark"] .ledger .paid { color: #6EE7B7; }
+[data-theme="dark"] .ledger .pending { color: #FCD34D; }
+[data-theme="dark"] .attendance-grid .present { background: #065F46; color: #D1FAE5; }
+[data-theme="dark"] .attendance-grid .absent { background: #991B1B; color: #FEE2E2; }
 .message p { margin: 0 0 var(--space-2); }
 .message .delivered { font-size: 14px; color: var(--fg-muted); }

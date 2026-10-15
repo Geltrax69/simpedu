@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Simpedu - School Management System and ID Card Printing Services",
   "scripts": {
-    "build": "eleventy",
+    "build": "eleventy && node scripts/hash-assets.mjs",
     "start": "eleventy --serve",
     "dev": "eleventy --serve"
   },

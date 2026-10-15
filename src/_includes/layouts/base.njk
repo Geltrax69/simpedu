@@ -6,17 +6,23 @@
   <script>try{var t=localStorage.getItem("simpedu-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
+  <link rel="canonical" href="https://simpedu.in{{ page.url }}">
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="/assets/img/device-scene.webp">
+  <meta property="og:url" content="https://simpedu.in{{ page.url }}">
+  <meta property="og:image" content="https://simpedu.in/assets/img/og-image.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Simpedu school management dashboard">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ title }}">
   <meta name="twitter:description" content="{{ description }}">
-  <meta name="twitter:image" content="/assets/img/device-scene.webp">
+  <meta name="twitter:image" content="https://simpedu.in/assets/img/og-image.webp">
+  <meta name="twitter:image:alt" content="Simpedu school management dashboard">
   <link rel="stylesheet" href="/assets/css/tokens.css">
   <link rel="stylesheet" href="/assets/css/site.css">
-  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/logo.webp" type="image/webp">
 </head>
 <body>
   {% include "partials/header.njk" %}
