@@ -1,0 +1,14 @@
+ts	phase	decision	why	evidence	result
+2026-10-15T14:23:00Z	start	Began Simpedu rebuild run: clone repo, read SIMPEDU_REDESIGN_PROMPT.md, route via pstack figure-it-out	User asked to delete Jelly, clone simpedu, read the prompt, work carefully with pstack	~/workspace/simpedu/SIMPEDU_REDESIGN_PROMPT.md	run started
+2026-10-15T14:25:00Z	frame	Defined done as 6 falsifiable predicates, scoped to 5 pages plus 404, set rigor high on visual direction	figure-it-out Phase A requires a falsifiable predicate before a long run	WORKFLOW.md	predicate written
+2026-10-15T14:30:00Z	design	Chose Eleventy over Next.js for the rebuild	The brief demands reusable components and a real build command; Next.js would ship a JS runtime fighting the performance targets	WORKFLOW.md	Eletenty scaffold builds
+2026-10-15T14:35:00Z	scaffold	Built Eleventy scaffold: tokens, base layout, header/footer, theme toggle	Foundational work before features	src/_includes/, src/assets/css/tokens.css	builds clean
+2026-10-15T14:40:00Z	harness	Wrote screenshot and link-check scripts, captured old-site baseline	Verification harness before features, per figure-it-out Phase B	scripts/verify/, scripts/verify/baseline/	10 baseline shots, 0 errors
+2026-10-15T14:45:00Z	assets	Generated device scene and ID-card campaign via media tool	The brief forbids invented dashboard text; generated scenes are blank for real UI compositing	src/assets/img/device-scene.webp, idcard-campaign.webp	101KB and 216KB, under 350KB budget
+2026-10-15T14:50:00Z	assets	Redrew logo as 647-byte SVG in cobalt/ink	Old logo2.png was 545KB; brief demands under 15KB	src/assets/logo.svg	647 bytes
+2026-10-15T15:00:00Z	homepage	Built 6-section homepage per the brief	One-way door; kept in main thread	~/workspace/simpedu/src/index.njk	renders clean
+2026-10-15T15:10:00Z	pages	Fanned out Services, ID cards, About, Contact to 4 subagents	Independent files, no shared-state conflicts; pstack poteto-agent wrapper	4 subagent handoffs	all built and verified
+2026-10-15T15:20:00Z	review	Fixed mobile header with accessible hamburger menu	Screenshots showed nav squeezing unreadably at 390px	src/_includes/partials/header.njk	menu opens, Escape closes
+2026-10-15T15:25:00Z	cleanup	Deleted _next/ and old compiled HTML, updated vercel.json	Subtract before you add; new site is the source of truth	git log	Eleventy builds, Vercel serves dist/
+2026-10-15T15:30:00Z	verify	Interactive tests: tabs, theme, menu, card flip all pass	Prove-it-works on the real artifact	scripts/verify/interactive.mjs	5/5 PASS
+2026-10-15T15:35:00Z	verify	Link check clean, images under budget	Definition of done items 1 and 5	scripts/verify/links.mjs	ALL LINKS OK
