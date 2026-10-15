@@ -5,9 +5,16 @@
   function setTheme(t) {
     root.setAttribute("data-theme", t);
     try { localStorage.setItem("simpedu-theme", t); } catch (e) {}
+    var label = document.querySelector("[data-theme-label]");
+    if (label) label.textContent = t === "dark" ? "Light" : "Dark";
   }
   var btn = document.querySelector("[data-theme-toggle]");
   if (btn) {
+    // Set initial label
+    var initialLabel = document.querySelector("[data-theme-label]");
+    if (initialLabel) {
+      initialLabel.textContent = root.getAttribute("data-theme") === "dark" ? "Light" : "Dark";
+    }
     btn.addEventListener("click", function () {
       setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
     });
@@ -55,8 +62,16 @@ document.addEventListener("click", function (e) {
   if (img && (side === "front" || side === "back")) {
     var src = img.getAttribute("data-" + side + "-src");
     var alt = img.getAttribute("data-" + side + "-alt");
-    if (src) img.setAttribute("src", src);
-    if (alt) img.setAttribute("alt", alt);
+    if (src) {
+      img.classList.add("flipping");
+      setTimeout(function () {
+        img.setAttribute("src", src);
+        if (alt) img.setAttribute("alt", alt);
+        img.classList.remove("flipping");
+      }, 180);
+    } else if (alt) {
+      img.setAttribute("alt", alt);
+    }
   }
 });
 
@@ -96,6 +111,28 @@ document.addEventListener("click", function (e) {
 (function () {
   var form = document.getElementById("contact-form");
   if (!form) return;
+  
+  // Preselect subject from ?service= query param
+  var params = new URLSearchParams(window.location.search);
+  var service = params.get("service");
+  var subject = form.querySelector("#cf-subject");
+  if (service && subject) {
+    var map = {
+      "id-cards": "ID-card printing enquiry",
+      "demo": "Book a demo",
+      "support": "Support for an existing setup"
+    };
+    var target = map[service];
+    if (target) {
+      for (var i = 0; i < subject.options.length; i++) {
+        if (subject.options[i].value === target) {
+          subject.selectedIndex = i;
+          break;
+        }
+      }
+    }
+  }
+  
   var status = form.querySelector("[data-form-status]");
   var submit = form.querySelector("[data-submit]");
   var submitLabel = submit.querySelector("[data-submit-label]");
@@ -137,13 +174,17 @@ document.addEventListener("click", function (e) {
       message: form.message.value.trim()
     };
     setState("pending");
+    var controller = new AbortController();
+    var timeout = setTimeout(function () { controller.abort(); }, 15000);
     fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      signal: controller.signal
     })
       .then(function (res) { return res.json().then(function (json) { return json && json.success; }); })
       .then(function (ok) {
+        clearTimeout(timeout);
         if (ok) {
           var done = document.createElement("span");
           done.textContent = "Thanks — your message is on its way. We reply within one working day.";
@@ -153,8 +194,20 @@ document.addEventListener("click", function (e) {
           setState("failure", failureMessage(), "error");
         }
       })
-      .catch(function () {
-        setState("failure", failureMessage(), "error");
+      .catch(function (err) {
+        clearTimeout(timeout);
+        var msg = failureMessage();
+        if (err && err.name === "AbortError") {
+          var timeoutMsg = document.createElement("span");
+          timeoutMsg.appendChild(document.createTextNode("The request timed out. Please try again, or write to us directly at "));
+          var a = document.createElement("a");
+          a.href = "mailto:humanresource@simpedu.in";
+          a.textContent = "humanresource@simpedu.in";
+          timeoutMsg.appendChild(a);
+          timeoutMsg.appendChild(document.createTextNode("."));
+          msg = timeoutMsg;
+        }
+        setState("failure", msg, "error");
       });
   });
 })();
