@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f9fa; color: #1a1a1a; }
+  .app { display: flex; min-height: 100vh; }
+  .sidebar { width: 280px; background: #fff; border-right: 1px solid #e5e7eb; padding: 24px; }
+  .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+  .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, #a855f7, #ec4899); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; }
+  .logo-text { font-weight: 700; font-size: 18px; }
+  .logo-sub { font-size: 12px; color: #6b7280; }
+  .nav-section { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin: 24px 0 12px; }
+  .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; font-size: 14px; color: #374151; margin-bottom: 4px; }
+  .nav-item.active { background: #f3f4f6; font-weight: 600; }
+  .main { flex: 1; padding: 24px 32px; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  .breadcrumb { font-size: 14px; color: #6b7280; }
+  .search { padding: 8px 16px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; }
+  .hero { background: linear-gradient(135deg, #a855f7, #ec4899, #ef4444); border-radius: 16px; padding: 32px; color: #fff; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+  .hero h1 { font-size: 28px; margin-bottom: 8px; }
+  .hero p { opacity: 0.9; font-size: 14px; }
+  .hero-badge { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 12px; display: inline-block; margin-top: 8px; }
+  .hero-right { text-align: right; }
+  .hero-time { font-size: 24px; font-weight: 700; }
+  .hero-date { opacity: 0.9; font-size: 14px; }
+  .demo-label { background: #fff; color: #a855f7; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; display: inline-block; margin-top: 12px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e5e7eb; }
+  .stat-label { font-size: 13px; color: #6b7280; margin-bottom: 8px; }
+  .stat-value { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+  .stat-sub { font-size: 12px; color: #6b7280; }
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .chart-card { background: #fff; border-radius: 12px; padding: 24px; border: 1px solid #e5e7eb; }
+  .chart-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .chart-sub { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+  .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 200px; margin-top: 16px; }
+  .bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .bars { display: flex; gap: 2px; align-items: flex-end; height: 160px; }
+  .bar { width: 12px; border-radius: 4px 4px 0 0; }
+  .bar.collected { background: #10b981; }
+  .bar.pending { background: #f59e0b; }
+  .bar-label { font-size: 10px; color: #6b7280; }
+  .legend { display: flex; gap: 16px; margin-top: 12px; font-size: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+  .line-chart { height: 200px; position: relative; margin-top: 16px; }
+  svg { width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">S</div>
+      <div>
+        <div class="logo-text">Simpedu</div>
+        <div class="logo-sub">School Management</div>
+      </div>
+    </div>
+    <div class="nav-section">Main Navigation</div>
+    <div class="nav-item active">Dashboard</div>
+    <div class="nav-item">Student Management</div>
+    <div class="nav-item">Teacher Management</div>
+    <div class="nav-item">Fee Management</div>
+    <div class="nav-item">Academic Management</div>
+    <div class="nav-item">Marks Management</div>
+    <div class="nav-item">Communication</div>
+    <div class="nav-item">Library Management</div>
+    <div class="nav-section">Quick Stats</div>
+    <div class="nav-item">Students <strong style="margin-left:auto">1,248</strong></div>
+    <div class="nav-item">Teachers <strong style="margin-left:auto">72</strong></div>
+    <div class="nav-item">Attendance <strong style="margin-left:auto">95.2%</strong></div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div class="breadcrumb">Dashboard &gt; Overview</div>
+      <div class="search">Search...</div>
+    </div>
+    <div class="hero">
+      <div>
+        <h1>Welcome to Simpedu Demo School</h1>
+        <p>School Administration Dashboard • Academic Year 2025–26</p>
+        <span class="hero-badge">Snapshot: 31 March 2026</span>
+      </div>
+      <div class="hero-right">
+        <div class="hero-time">10:30 AM</div>
+        <div class="hero-date">31 March 2026</div>
+        <span class="demo-label">DEMO DATA</span>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Total Students</div>
+        <div class="stat-value">1,248</div>
+        <div class="stat-sub">1,248 active</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Total Teachers</div>
+        <div class="stat-value">72</div>
+        <div class="stat-sub">72 active</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Attendance</div>
+        <div class="stat-value">95.2%</div>
+        <div class="stat-sub">1,188 present, 60 absent</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Fee Collection</div>
+        <div class="stat-value">84%</div>
+        <div class="stat-sub">₹25.2L of ₹30L collected</div>
+      </div>
+    </div>
+    <div class="charts">
+      <div class="chart-card">
+        <div class="chart-title">Enrollment Trends</div>
+        <div class="chart-sub">Student growth, Apr 2025 – Mar 2026</div>
+        <div class="line-chart">
+          <svg viewBox="0 0 400 200" preserveAspectRatio="none">
+            <polyline fill="none" stroke="#3b82f6" stroke-width="3"
+              points="0,180 36,172 73,165 109,158 145,152 182,148 218,144 255,141 291,139 327,137 364,137 400,137"/>
+            <text x="0" y="195" font-size="10" fill="#6b7280">Apr</text>
+            <text x="360" y="195" font-size="10" fill="#6b7280">Mar</text>
+            <text x="5" y="20" font-size="10" fill="#6b7280">1,248</text>
+            <text x="5" y="185" font-size="10" fill="#6b7280">1,208</text>
+          </svg>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Fee Collection</div>
+        <div class="chart-sub">Monthly collection vs pending (₹ lakh)</div>
+        <div class="bar-chart" id="fee-chart"></div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div> Collected</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Pending</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+  const collected = [1.6, 1.8, 1.9, 2.0, 2.1, 2.2, 2.0, 2.1, 2.3, 2.4, 2.2, 2.6];
+  const pending = [0.6, 0.5, 0.5, 0.4, 0.4, 0.4, 0.4, 0.4, 0.3, 0.3, 0.3, 0.3];
+  const months = ['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'];
+  const maxVal = 3.0;
+  const chart = document.getElementById('fee-chart');
+  collected.forEach((c, i) => {
+    const p = pending[i];
+    const group = document.createElement('div');
+    group.className = 'bar-group';
+    const bars = document.createElement('div');
+    bars.className = 'bars';
+    const barC = document.createElement('div');
+    barC.className = 'bar collected';
+    barC.style.height = (c / maxVal * 160) + 'px';
+    barC.title = `Collected: ₹${c}L`;
+    const barP = document.createElement('div');
+    barP.className = 'bar pending';
+    barP.style.height = (p / maxVal * 160) + 'px';
+    barP.title = `Pending: ₹${p}L`;
+    bars.appendChild(barC);
+    bars.appendChild(barP);
+    const label = document.createElement('div');
+    label.className = 'bar-label';
+    label.textContent = months[i];
+    group.appendChild(bars);
+    group.appendChild(label);
+    chart.appendChild(group);
+  });
+</script>
+</body>
+</html>

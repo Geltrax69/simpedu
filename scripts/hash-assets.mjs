@@ -27,7 +27,7 @@ function processDir(dir, manifest = {}) {
         // Skip already-hashed files (name.hash.ext pattern)
         const name = basename(entry, ext);
         if (/^[a-f0-9]{8}$/.test(name.split('.').pop())) {
-          return;
+          continue;
         }
         const hash = hashFile(full);
         const hashed = `${name}.${hash}${ext}`;
